@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "767617498222",
+    "project_id": "retracestack",
+    "storage_bucket": "retracestack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767617498222:android:13bbf386d61172a12f3a7f",
+        "android_client_info": {
+          "package_name": "com.everythingstack.retrace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767617498222-l2d9e8tbq2qijuj68ov7itug31o1reuk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.everythingstack.retrace",
+            "certificate_hash": "18a9020fd45baf826960a8859baa36727251fbf9"
+          }
+        },
+        {
+          "client_id": "767617498222-dib1ctc7757br2aq68qggln3cjtdbtb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQyMEJ0mKIO8mnFVfWatv42QiTt9WcIOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767617498222-dib1ctc7757br2aq68qggln3cjtdbtb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
