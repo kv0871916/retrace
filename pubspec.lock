@@ -181,13 +181,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.0+2"
-  flutter_facebook_login_web:
-    dependency: "direct main"
-    description:
-      name: flutter_facebook_login_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1+1"
   flutter_lints:
     dependency: "direct dev"
     description:

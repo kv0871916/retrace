@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:retrace/controller/auth/auth_helper.dart';
-import 'package:retrace/provider/auth/social_provider.dart';
+import '../../controller/auth/auth_helper.dart';
+import '../../provider/auth/social_provider.dart';
 
 class SocialAuthBotton extends StatelessWidget {
   final FaIcon faIcon;

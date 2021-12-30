@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:retrace/controller/auth/auth_helper.dart';
+import '../../controller/auth/auth_helper.dart';
 
 import 'social_auth_class.dart';
 

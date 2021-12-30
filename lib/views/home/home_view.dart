@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:retrace/views/socialauth/social_view.dart';
+
+import '../socialauth/social_view.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
