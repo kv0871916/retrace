@@ -27,7 +27,7 @@
   <meta name="apple-mobile-web-app-title" content="retrace">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
   <meta name="google-signin-client_id"
-    content="767617498222-l2d9e8tbq2qijuj68ov7itug31o1reuk.apps.googleusercontent.com">
+    content="767617498222-dib1ctc7757br2aq68qggln3cjtdbtb6.apps.googleusercontent.com">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -37,12 +37,15 @@
 </head>
 
 <body>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
+
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
 
   <script>
-    var serviceWorkerVersion = '2368805576';
+    var serviceWorkerVersion = '3617688598';
     var scriptLoaded = false;
     function loadMainDartJs() {
       if (scriptLoaded) {
@@ -105,29 +108,7 @@
       loadMainDartJs();
     }
   </script>
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
 
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyBFeCQ_dTsnWLAXKzcmWVtR5IYz2pGSuNw",
-      authDomain: "retracestack.firebaseapp.com",
-      projectId: "retracestack",
-      storageBucket: "retracestack.appspot.com",
-      messagingSenderId: "767617498222",
-      appId: "1:767617498222:web:2ec9e97f7c952dca2f3a7f",
-      measurementId: "G-KSX6N9Y1P9"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
 </body>
 
 </html>
