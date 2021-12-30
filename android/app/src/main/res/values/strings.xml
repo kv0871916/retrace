@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Retrace</string>
+  <string name="facebook_app_id">4629478173797142</string>
+  <string name="fb_login_protocol_scheme">fb4629478173797142</string>
+  <string name="facebook_client_token">f65edd6b0d0565bd4671182e0f035e6c</string>
+</resources>
