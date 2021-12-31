@@ -28,7 +28,7 @@ class SocialAuthBotton extends StatelessWidget {
 
       if (loginType == LoginType.facebook) socialProvider.signInWithFacebook();
 
-      if (loginType == LoginType.twitter) {}
+      if (loginType == LoginType.twitter) socialProvider.signInWithTwitter();
     }
 
     return ElevatedButton.icon(

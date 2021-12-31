@@ -43,6 +43,8 @@ dependencies:
   google_sign_in_web: ^0.10.0+3
   fluttertoast: ^8.0.8
   url_strategy: ^0.2.0
+  twitter_login: ^4.0.1
+  shared_preferences: ^2.0.11
 
 dev_dependencies:
   flutter_test:

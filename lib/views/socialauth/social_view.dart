@@ -32,6 +32,12 @@ class SocialAuthView extends StatelessWidget {
           loginType: LoginType.facebook,
           textLabel: "Facebook",
         ),
+        const SocialAuthBotton(
+          faIcon: FaIcon(FontAwesomeIcons.twitter),
+          faColor: Colors.lightBlue,
+          loginType: LoginType.twitter,
+          textLabel: "Twitter",
+        ),
       ],
     );
   }
