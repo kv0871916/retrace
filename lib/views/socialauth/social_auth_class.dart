@@ -20,15 +20,24 @@ class SocialAuthBotton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ontap() {
+    ontap() async {
       final socialProvider =
           Provider.of<SocialProvider>(context, listen: false);
 
-      if (loginType == LoginType.google) socialProvider.googlesignin();
+      if (loginType == LoginType.google) {
+        var google = await socialProvider.googlesignin();
+      }
 
-      if (loginType == LoginType.facebook) socialProvider.signInWithFacebook();
+      if (loginType == LoginType.facebook) {
+        var facebook = await socialProvider.signInWithFacebook();
+      }
 
-      if (loginType == LoginType.twitter) socialProvider.signInWithTwitter();
+      if (loginType == LoginType.twitter) {
+        var twitter = await socialProvider.signInWithTwitter();
+      }
+      if (loginType == LoginType.github) {
+        var github = await socialProvider.signInWithGithub(context);
+      }
     }
 
     return ElevatedButton.icon(

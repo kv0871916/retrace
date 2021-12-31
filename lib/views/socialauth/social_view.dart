@@ -38,6 +38,12 @@ class SocialAuthView extends StatelessWidget {
           loginType: LoginType.twitter,
           textLabel: "Twitter",
         ),
+        const SocialAuthBotton(
+          faIcon: FaIcon(FontAwesomeIcons.github),
+          faColor: Colors.blueGrey,
+          loginType: LoginType.github,
+          textLabel: "Github",
+        ),
       ],
     );
   }
