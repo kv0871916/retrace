@@ -25,18 +25,18 @@ class SocialAuthBotton extends StatelessWidget {
           Provider.of<SocialProvider>(context, listen: false);
 
       if (loginType == LoginType.google) {
-        var google = await socialProvider.googlesignin();
+        await socialProvider.googlesignin();
       }
 
       if (loginType == LoginType.facebook) {
-        var facebook = await socialProvider.signInWithFacebook();
+        await socialProvider.signInWithFacebook();
       }
 
       if (loginType == LoginType.twitter) {
-        var twitter = await socialProvider.signInWithTwitter();
+        await socialProvider.signInWithTwitter();
       }
       if (loginType == LoginType.github) {
-        var github = await socialProvider.signInWithGithub(context);
+        await socialProvider.signInWithGithub(context);
       }
     }
 

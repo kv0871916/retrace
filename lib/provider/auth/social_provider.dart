@@ -13,19 +13,26 @@ import 'package:twitter_login/twitter_login.dart';
 import '../../controller/auth/auth_helper.dart';
 
 class SocialProvider extends ChangeNotifier {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final gsignin = GoogleSignIn(
-      // scopes: <String>[
-      //   'email',
-      //   'https://www.googleapis.com/auth/contacts.readonly',
-      // ],
-      );
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final gsignin = GoogleSignIn();
+  // Create a TwitterLogin instance
+  final twitterLogin = TwitterLogin(
+      apiKey: '7ZDT0k5z1nIX6rZgaZ8i8mqds',
+      apiSecretKey: 'MbqGfCewXfh7ljJ1nUtbkNI1XSSxfMVFYGI8tiR2tMxwBepwne',
+      redirectURI: 'retracestack://');
+  // Create a GitHubSignIn instance
+  final GitHubSignIn gitHubSignIn = GitHubSignIn(
+      clientId: "40947fc59a4803711f2f",
+      clientSecret: "486352f6476f09eb6ded7df9024393b09b563d80",
+      title: 'Retrace Stack',
+      centerTitle: true,
+      redirectUrl: 'https://retracestack.firebaseapp.com/__/auth/handler');
 
   GoogleSignInAccount? _guser;
   User? _user;
 
-  GoogleSignInAccount get user => _guser!;
-  User get fbuser => _user!;
+  GoogleSignInAccount get guser => _guser!;
+  User? get user => _user;
 
   Future googlesignin() async {
     //init user
@@ -41,13 +48,12 @@ class SocialProvider extends ChangeNotifier {
         accessToken: gauth.accessToken,
         idToken: gauth.idToken,
       );
-      final googlesignin =
-          await FirebaseAuth.instance.signInWithCredential(gcreds);
-      _user = googlesignin.user;
-      log("Google ${googlesignin.user?.displayName}");
+      final userCredential = await auth.signInWithCredential(gcreds);
+      _user = userCredential.user;
+      log("Google ${userCredential.user!.displayName}");
 
       Fluttertoast.showToast(
-          msg: "${user.displayName}",
+          msg: "${userCredential.user!.displayName}",
           backgroundColor: Colors.green,
           textColor: Colors.white,
           fontSize: 16.0);
@@ -88,16 +94,17 @@ class SocialProvider extends ChangeNotifier {
           case LoginStatus.success:
             final AuthCredential facebookCredential =
                 FacebookAuthProvider.credential(result.accessToken!.token);
-            final userCredential =
-                await _auth.signInWithCredential(facebookCredential);
-            _user = userCredential.user;
-            log("facebookCredential $facebookCredential && userCredential $userCredential");
-            Fluttertoast.showToast(
-                msg: "${userCredential.user?.displayName}",
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 16.0);
+            await auth.signInWithCredential(facebookCredential).then((value) {
+              _user = value.user;
+              log("facebookCredential $facebookCredential && userCredential $value");
+              Fluttertoast.showToast(
+                  msg: "${value.user?.displayName}",
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            });
             notifyListeners();
+
             return Resource(status: Status.success);
           case LoginStatus.cancelled:
             notifyListeners();
@@ -123,10 +130,9 @@ class SocialProvider extends ChangeNotifier {
 
         // Once signed in, return the UserCredential
 
-        await FirebaseAuth.instance
-            .signInWithPopup(twitterProvider)
-            .then((value) {
+        await auth.signInWithPopup(twitterProvider).then((value) {
           _user = value.user;
+          log("twitterProvider $twitterProvider && userCredential $value");
           Fluttertoast.showToast(
               msg: "${value.user?.displayName}",
               backgroundColor: Colors.green,
@@ -135,15 +141,9 @@ class SocialProvider extends ChangeNotifier {
         });
         // Or use signInWithRedirect
         // return await FirebaseAuth.instance.signInWithRedirect(twitterProvider);
-
+        notifyListeners();
         return Resource(status: Status.success);
       } else {
-        // Create a TwitterLogin instance
-        final twitterLogin = TwitterLogin(
-            apiKey: '7ZDT0k5z1nIX6rZgaZ8i8mqds',
-            apiSecretKey: 'MbqGfCewXfh7ljJ1nUtbkNI1XSSxfMVFYGI8tiR2tMxwBepwne',
-            redirectURI: 'retracestack://');
-
         // Trigger the sign-in flow
         final result = await twitterLogin.login();
         switch (result.status) {
@@ -155,15 +155,18 @@ class SocialProvider extends ChangeNotifier {
             );
 
             // Once signed in, return the UserCredential
-            final userCredential = await FirebaseAuth.instance
-                .signInWithCredential(twitterAuthCredential);
-            _user = userCredential.user;
-            log("facebookCredential $twitterAuthCredential && userCredential $userCredential");
-            Fluttertoast.showToast(
-                msg: "${userCredential.user?.displayName}",
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 16.0);
+            await auth
+                .signInWithCredential(twitterAuthCredential)
+                .then((value) {
+              _user = value.user;
+              log("facebookCredential $twitterAuthCredential && userCredential $value");
+              Fluttertoast.showToast(
+                  msg: "${value.user?.displayName}",
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            });
+
             notifyListeners();
 
             return Resource(status: Status.success);
@@ -201,18 +204,9 @@ class SocialProvider extends ChangeNotifier {
         });
         // Or use signInWithRedirect
         // return await FirebaseAuth.instance.signInWithRedirect(twitterProvider);
-
+        notifyListeners();
         return Resource(status: Status.success);
       } else {
-        // Create a GitHubSignIn instance
-        final GitHubSignIn gitHubSignIn = GitHubSignIn(
-            clientId: "40947fc59a4803711f2f",
-            clientSecret: "486352f6476f09eb6ded7df9024393b09b563d80",
-            title: 'Retrace Stack',
-            centerTitle: true,
-            redirectUrl:
-                'https://retracestack.firebaseapp.com/__/auth/handler');
-
         // Trigger the sign-in flow
         final result = await gitHubSignIn.signIn(context);
 
@@ -224,8 +218,8 @@ class SocialProvider extends ChangeNotifier {
                 GithubAuthProvider.credential(result.token!);
 
             // Once signed in, return the UserCredential
-            final userCredential = await FirebaseAuth.instance
-                .signInWithCredential(githubAuthCredential);
+            final userCredential =
+                await auth.signInWithCredential(githubAuthCredential);
             _user = userCredential.user;
             log("githubAuthCredential $githubAuthCredential && userCredential $userCredential");
             Fluttertoast.showToast(
@@ -250,5 +244,13 @@ class SocialProvider extends ChangeNotifier {
     } on FirebaseAuthException {
       rethrow;
     }
+  }
+
+  Future<void> signOut() async {
+    _guser = null;
+    _user = null;
+    await gsignin.signOut();
+    await auth.signOut();
+    notifyListeners();
   }
 }
