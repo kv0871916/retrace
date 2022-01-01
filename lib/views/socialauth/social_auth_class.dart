@@ -5,7 +5,7 @@ import '../../controller/auth/auth_helper.dart';
 import '../../provider/auth/social_provider.dart';
 
 class SocialAuthBotton extends StatelessWidget {
-  final FaIcon faIcon;
+  final IconData faIcon;
   final Color faColor;
   final LoginType loginType;
   final String textLabel;
@@ -40,16 +40,29 @@ class SocialAuthBotton extends StatelessWidget {
       }
     }
 
-    return ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(primary: faColor),
-        onPressed: ontap,
-        icon: faIcon,
-        label: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
+    return Container(
+        decoration: BoxDecoration(
+          color: faColor,
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          onPressed: ontap,
+          icon: FaIcon(
+            faIcon,
+            color: Colors.white,
           ),
-          child: Text(textLabel),
         ));
+
+    // ElevatedButton.icon(
+    //     style: ElevatedButton.styleFrom(primary: faColor),
+    //     onPressed: ontap,
+    //     icon: faIcon,
+    //     label: Container(
+    //       padding: const EdgeInsets.all(8),
+    //       decoration: const BoxDecoration(
+    //         shape: BoxShape.circle,
+    //       ),
+    //       // child: Text(textLabel),
+    //     ));
   }
 }

@@ -30,13 +30,15 @@ class SocialProvider extends ChangeNotifier {
 
   GoogleSignInAccount? _guser;
   User? _user;
-
+  bool? _loading;
+  bool get loading => _loading ?? false;
   GoogleSignInAccount get guser => _guser!;
   User? get user => _user;
 
   Future googlesignin() async {
     //init user
     try {
+      _loading = true;
       final guser = await gsignin.signIn();
       if (guser == null) return;
       _guser = guser;
@@ -48,24 +50,31 @@ class SocialProvider extends ChangeNotifier {
         accessToken: gauth.accessToken,
         idToken: gauth.idToken,
       );
-      final userCredential = await auth.signInWithCredential(gcreds);
-      _user = userCredential.user;
-      log("Google ${userCredential.user!.displayName}");
 
-      Fluttertoast.showToast(
-          msg: "${userCredential.user!.displayName}",
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      await auth.signInWithCredential(gcreds).then((value) {
+        _user = value.user;
+        log("Google ${value.user!.displayName}");
+
+        Fluttertoast.showToast(
+            msg: "${value.user!.displayName}",
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        _loading = false;
+        notifyListeners();
+      });
+      _loading = false;
       notifyListeners();
     } catch (e) {
       log("Error:" + e.toString());
+      notifyListeners();
     }
   }
 
   Future<Resource?> signInWithFacebook() async {
     try {
       if (kIsWeb) {
+        _loading = true;
         FacebookAuthProvider facebookProvider = FacebookAuthProvider();
 
         facebookProvider.addScope('email');
@@ -73,22 +82,22 @@ class SocialProvider extends ChangeNotifier {
           'display': 'popup',
         });
 
-        await FirebaseAuth.instance
-            .signInWithPopup(facebookProvider)
-            .then((value) {
+        await auth.signInWithPopup(facebookProvider).then((value) {
           _user = value.user;
           Fluttertoast.showToast(
-              msg: "${value.user?.displayName}",
+              msg: "${value.user!.displayName}",
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0);
+          _loading = false;
           notifyListeners();
           return Resource(status: Status.success);
         });
-
+        _loading = false;
         notifyListeners();
         return Resource(status: Status.error);
       } else {
+        _loading = true;
         final LoginResult result = await FacebookAuth.instance.login();
         switch (result.status) {
           case LoginStatus.success:
@@ -98,26 +107,34 @@ class SocialProvider extends ChangeNotifier {
               _user = value.user;
               log("facebookCredential $facebookCredential && userCredential $value");
               Fluttertoast.showToast(
-                  msg: "${value.user?.displayName}",
+                  msg: "${value.user!.displayName}",
                   backgroundColor: Colors.green,
                   textColor: Colors.white,
                   fontSize: 16.0);
+              _loading = false;
+              notifyListeners();
             });
+            _loading = false;
             notifyListeners();
 
             return Resource(status: Status.success);
           case LoginStatus.cancelled:
+            _loading = false;
             notifyListeners();
             return Resource(status: Status.cancelled);
           case LoginStatus.failed:
+            _loading = false;
             notifyListeners();
             return Resource(status: Status.error);
           default:
+            _loading = false;
             notifyListeners();
             return null;
         }
       }
     } on FirebaseAuthException {
+      _loading = false;
+      notifyListeners();
       rethrow;
     }
   }
@@ -125,6 +142,7 @@ class SocialProvider extends ChangeNotifier {
   Future<Resource?> signInWithTwitter() async {
     try {
       if (kIsWeb) {
+        _loading = true;
         // Create a new provider
         TwitterAuthProvider twitterProvider = TwitterAuthProvider();
 
@@ -134,17 +152,21 @@ class SocialProvider extends ChangeNotifier {
           _user = value.user;
           log("twitterProvider $twitterProvider && userCredential $value");
           Fluttertoast.showToast(
-              msg: "${value.user?.displayName}",
+              msg: "${value.user!.displayName}",
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0);
+          _loading = false;
+          notifyListeners();
         });
         // Or use signInWithRedirect
         // return await FirebaseAuth.instance.signInWithRedirect(twitterProvider);
+        _loading = false;
         notifyListeners();
         return Resource(status: Status.success);
       } else {
         // Trigger the sign-in flow
+        _loading = true;
         final result = await twitterLogin.login();
         switch (result.status) {
           case TwitterLoginStatus.loggedIn:
@@ -161,27 +183,34 @@ class SocialProvider extends ChangeNotifier {
               _user = value.user;
               log("facebookCredential $twitterAuthCredential && userCredential $value");
               Fluttertoast.showToast(
-                  msg: "${value.user?.displayName}",
+                  msg: "${value.user!.displayName}",
                   backgroundColor: Colors.green,
                   textColor: Colors.white,
                   fontSize: 16.0);
+              _loading = false;
+              notifyListeners();
             });
-
+            _loading = false;
             notifyListeners();
 
             return Resource(status: Status.success);
           case TwitterLoginStatus.cancelledByUser:
+            _loading = false;
             notifyListeners();
             return Resource(status: Status.cancelled);
           case TwitterLoginStatus.error:
+            _loading = false;
             notifyListeners();
             return Resource(status: Status.error);
           default:
+            _loading = false;
             notifyListeners();
             return null;
         }
       }
     } on FirebaseAuthException {
+      _loading = false;
+      notifyListeners();
       rethrow;
     }
   }
@@ -189,6 +218,7 @@ class SocialProvider extends ChangeNotifier {
   Future<Resource?> signInWithGithub(BuildContext context) async {
     try {
       if (kIsWeb) {
+        _loading = true;
         // Create a new provider
         GithubAuthProvider githubProvider = GithubAuthProvider();
         // Once signed in, return the UserCredential
@@ -197,16 +227,20 @@ class SocialProvider extends ChangeNotifier {
             .then((value) {
           _user = value.user;
           Fluttertoast.showToast(
-              msg: "${value.user?.displayName}",
+              msg: "${value.user!.displayName}",
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0);
+          _loading = false;
+          notifyListeners();
         });
         // Or use signInWithRedirect
         // return await FirebaseAuth.instance.signInWithRedirect(twitterProvider);
+        _loading = false;
         notifyListeners();
         return Resource(status: Status.success);
       } else {
+        _loading = true;
         // Trigger the sign-in flow
         final result = await gitHubSignIn.signIn(context);
 
@@ -218,39 +252,49 @@ class SocialProvider extends ChangeNotifier {
                 GithubAuthProvider.credential(result.token!);
 
             // Once signed in, return the UserCredential
-            final userCredential =
-                await auth.signInWithCredential(githubAuthCredential);
-            _user = userCredential.user;
-            log("githubAuthCredential $githubAuthCredential && userCredential $userCredential");
-            Fluttertoast.showToast(
-                msg: "${userCredential.user?.displayName}",
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 16.0);
+            await auth.signInWithCredential(githubAuthCredential).then((value) {
+              _user = value.user;
+              log("githubAuthCredential $githubAuthCredential && userCredential $value");
+              Fluttertoast.showToast(
+                  msg: "${value.user!.displayName}",
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+              _loading = false;
+              notifyListeners();
+            });
+            _loading = false;
             notifyListeners();
-
             return Resource(status: Status.success);
           case GitHubSignInResultStatus.cancelled:
+            _loading = false;
             notifyListeners();
             return Resource(status: Status.cancelled);
           case GitHubSignInResultStatus.failed:
+            _loading = false;
             notifyListeners();
             return Resource(status: Status.error);
           default:
+            _loading = false;
             notifyListeners();
             return null;
         }
       }
     } on FirebaseAuthException {
+      _loading = false;
+      notifyListeners();
       rethrow;
     }
   }
 
   Future<void> signOut() async {
-    _guser = null;
-    _user = null;
+    _loading = true;
+    await Future.delayed(const Duration(seconds: 1));
     await gsignin.signOut();
     await auth.signOut();
+    _guser = null;
+    _user = null;
+    _loading = false;
     notifyListeners();
   }
 }

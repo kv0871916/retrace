@@ -20,30 +20,35 @@ class SocialAuthView extends StatelessWidget {
             color: Colors.grey.shade800,
           ),
         ),
-        const SocialAuthBotton(
-          faIcon: FaIcon(FontAwesomeIcons.google),
-          faColor: Colors.red,
-          loginType: LoginType.google,
-          textLabel: "Google",
-        ),
-        const SocialAuthBotton(
-          faIcon: FaIcon(FontAwesomeIcons.facebook),
-          faColor: Colors.blue,
-          loginType: LoginType.facebook,
-          textLabel: "Facebook",
-        ),
-        const SocialAuthBotton(
-          faIcon: FaIcon(FontAwesomeIcons.twitter),
-          faColor: Colors.lightBlue,
-          loginType: LoginType.twitter,
-          textLabel: "Twitter",
-        ),
-        const SocialAuthBotton(
-          faIcon: FaIcon(FontAwesomeIcons.github),
-          faColor: Colors.blueGrey,
-          loginType: LoginType.github,
-          textLabel: "Github",
-        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            SocialAuthBotton(
+              faIcon: FontAwesomeIcons.google,
+              faColor: Colors.red,
+              loginType: LoginType.google,
+              textLabel: "Google",
+            ),
+            SocialAuthBotton(
+              faIcon: FontAwesomeIcons.facebook,
+              faColor: Colors.blue,
+              loginType: LoginType.facebook,
+              textLabel: "Facebook",
+            ),
+            SocialAuthBotton(
+              faIcon: FontAwesomeIcons.twitter,
+              faColor: Colors.lightBlue,
+              loginType: LoginType.twitter,
+              textLabel: "Twitter",
+            ),
+            SocialAuthBotton(
+              faIcon: FontAwesomeIcons.github,
+              faColor: Colors.blueGrey,
+              loginType: LoginType.github,
+              textLabel: "Github",
+            ),
+          ],
+        )
       ],
     );
   }

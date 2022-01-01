@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:retrace/const/constant.dart';
 import 'package:retrace/provider/auth/social_provider.dart';
 
 import 'package:retrace/views/authhome/afterauthview.dart';
@@ -18,6 +19,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<SocialProvider>().user;
+    bool? loading = context.watch<SocialProvider>().loading;
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
@@ -25,7 +27,16 @@ class MyHomePage extends StatelessWidget {
           title: Text(title),
         ),
         body: Center(
-            child:
-                user != null ? const AfterAuthHome() : const SocialAuthView()));
+            child: user != null
+                ? loading == true
+                    ? Column(
+                        children: const [
+                          LinearProgressIndicator(),
+                          Text("Loading..."),
+                          LinearProgressIndicator(),
+                        ],
+                      )
+                    : const AfterAuthHome()
+                : const SocialAuthView()));
   }
 }
