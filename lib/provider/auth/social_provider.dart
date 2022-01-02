@@ -34,6 +34,30 @@ class SocialProvider extends ChangeNotifier {
   bool get loading => _loading ?? false;
   GoogleSignInAccount get guser => _guser!;
   User? get user => _user;
+  UserCredential? _profiledata;
+  UserCredential? get profiledata => _profiledata;
+
+  Future deleteaccount(ConfirmAction action) async {
+    if (action == ConfirmAction.accept) {
+      try {
+        _loading = true;
+        await Fluttertoast.showToast(
+            msg: "Successfully deleted your account ${_user!.displayName}",
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        await auth.currentUser!.delete();
+        await signOut();
+        _loading = false;
+        notifyListeners();
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'requires-recent-login') {
+          log('The user must reauthenticate before this operation can be executed.');
+          notifyListeners();
+        }
+      }
+    }
+  }
 
   Future googlesignin() async {
     //init user
@@ -53,8 +77,8 @@ class SocialProvider extends ChangeNotifier {
 
       await auth.signInWithCredential(gcreds).then((value) {
         _user = value.user;
-        log("Google ${value.user!.displayName}");
-
+        _profiledata = value;
+        log("GoogleCredential $gcreds && userCredential $value");
         Fluttertoast.showToast(
             msg: "${value.user!.displayName}",
             backgroundColor: Colors.green,
@@ -63,6 +87,7 @@ class SocialProvider extends ChangeNotifier {
         _loading = false;
         notifyListeners();
       });
+
       _loading = false;
       notifyListeners();
     } catch (e) {
@@ -84,6 +109,7 @@ class SocialProvider extends ChangeNotifier {
 
         await auth.signInWithPopup(facebookProvider).then((value) {
           _user = value.user;
+          _profiledata = value;
           Fluttertoast.showToast(
               msg: "${value.user!.displayName}",
               backgroundColor: Colors.green,
@@ -105,6 +131,7 @@ class SocialProvider extends ChangeNotifier {
                 FacebookAuthProvider.credential(result.accessToken!.token);
             await auth.signInWithCredential(facebookCredential).then((value) {
               _user = value.user;
+              _profiledata = value;
               log("facebookCredential $facebookCredential && userCredential $value");
               Fluttertoast.showToast(
                   msg: "${value.user!.displayName}",
@@ -150,6 +177,7 @@ class SocialProvider extends ChangeNotifier {
 
         await auth.signInWithPopup(twitterProvider).then((value) {
           _user = value.user;
+          _profiledata = value;
           log("twitterProvider $twitterProvider && userCredential $value");
           Fluttertoast.showToast(
               msg: "${value.user!.displayName}",
@@ -181,6 +209,7 @@ class SocialProvider extends ChangeNotifier {
                 .signInWithCredential(twitterAuthCredential)
                 .then((value) {
               _user = value.user;
+              _profiledata = value;
               log("facebookCredential $twitterAuthCredential && userCredential $value");
               Fluttertoast.showToast(
                   msg: "${value.user!.displayName}",
@@ -226,6 +255,7 @@ class SocialProvider extends ChangeNotifier {
             .signInWithPopup(githubProvider)
             .then((value) {
           _user = value.user;
+          _profiledata = value;
           Fluttertoast.showToast(
               msg: "${value.user!.displayName}",
               backgroundColor: Colors.green,
@@ -254,6 +284,7 @@ class SocialProvider extends ChangeNotifier {
             // Once signed in, return the UserCredential
             await auth.signInWithCredential(githubAuthCredential).then((value) {
               _user = value.user;
+              _profiledata = value;
               log("githubAuthCredential $githubAuthCredential && userCredential $value");
               Fluttertoast.showToast(
                   msg: "${value.user!.displayName}",

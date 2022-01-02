@@ -2,6 +2,7 @@
     package="com.everythingstack.retrace">
   <uses-permission android:name="android.permission.INTERNET"/>
    <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:label="retrace"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
