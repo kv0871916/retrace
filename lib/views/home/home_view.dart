@@ -41,9 +41,9 @@ class MyHomePage extends StatelessWidget {
               child: user != null
                   ? loading == true
                       ? Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             LinearProgressIndicator(),
-                            Text("Loading..."),
                             LinearProgressIndicator(),
                           ],
                         )
