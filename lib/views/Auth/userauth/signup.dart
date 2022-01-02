@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class UserLoginCustom extends StatelessWidget {
-  const UserLoginCustom({Key? key}) : super(key: key);
+class UserSignupCustom extends StatelessWidget {
+  const UserSignupCustom({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
+    final TextEditingController _confirmpasswordController =
+        TextEditingController();
 
     return CupertinoFormSection.insetGrouped(
       backgroundColor: const Color(0xFF162A49),
@@ -51,21 +53,39 @@ class UserLoginCustom extends StatelessWidget {
             },
           ),
         ),
+        CupertinoFormRow(
+          prefix: const Text('Confirm'),
+          child: CupertinoTextFormFieldRow(
+            controller: _confirmpasswordController,
+            obscureText: true,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            placeholder: 'Re-enter password',
+            validator: (confirmpassword) {
+              if (confirmpassword == null || confirmpassword.isEmpty) {
+                return 'Password cannot be empty';
+              } else if (confirmpassword != _passwordController.text) {
+                return 'Please enter same password';
+              } else if (confirmpassword.length < 6) {
+                return 'Must be atleast 6 characters long';
+              } else {
+                return null;
+              }
+            },
+          ),
+        ),
       ],
       footer: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(primary: Colors.blueAccent),
+            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
             label: AnimatedContainer(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
               duration: const Duration(milliseconds: 500),
               height: 50,
               width: 100,
               alignment: Alignment.center,
               child: const Text(
-                "Login",
+                "Register",
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -73,7 +93,7 @@ class UserLoginCustom extends StatelessWidget {
                 ),
               ),
             ),
-            icon: const FaIcon(FontAwesomeIcons.signInAlt),
+            icon: const FaIcon(FontAwesomeIcons.userPlus),
             onPressed: () async {
               await Fluttertoast.showToast(
                   msg: "Work in progress",

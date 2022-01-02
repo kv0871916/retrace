@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +35,13 @@ class MyHomePage extends StatelessWidget {
             centerTitle: true,
             elevation: 0,
             backgroundColor: const Color(0xFF162A49),
-            title: Text(title),
+            title: Text(
+              title,
+              style: const TextStyle(
+                  fontSize: 25,
+                  color: Colors.white,
+                  textBaseline: TextBaseline.ideographic),
+            ),
           ),
           body: Center(
               child: user != null
