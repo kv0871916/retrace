@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:retrace/const/constant.dart';
 
 class UserLoginCustom extends StatelessWidget {
   const UserLoginCustom({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class UserLoginCustom extends StatelessWidget {
     final TextEditingController _passwordController = TextEditingController();
 
     return CupertinoFormSection.insetGrouped(
-      backgroundColor: const Color(0xFF162A49),
+      backgroundColor: bg,
       margin: const EdgeInsets.all(12),
       children: [
         CupertinoFormRow(
@@ -56,7 +57,7 @@ class UserLoginCustom extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(primary: Colors.blueAccent),
+            style: ElevatedButton.styleFrom(primary: Colors.white),
             label: AnimatedContainer(
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(15)),
@@ -64,16 +65,19 @@ class UserLoginCustom extends StatelessWidget {
               height: 50,
               width: 100,
               alignment: Alignment.center,
-              child: const Text(
+              child: Text(
                 "Login",
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.white,
+                  color: bg,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            icon: const FaIcon(FontAwesomeIcons.signInAlt),
+            icon: FaIcon(
+              FontAwesomeIcons.signInAlt,
+              color: bg,
+            ),
             onPressed: () async {
               await Fluttertoast.showToast(
                   msg: "Work in progress",

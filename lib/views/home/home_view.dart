@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:retrace/const/constant.dart';
 import 'package:retrace/views/Auth/socialauth/social_view.dart';
 import '../../provider/auth/social_provider.dart';
 import '../Alert/alert.dart';
@@ -30,11 +31,11 @@ class MyHomePage extends StatelessWidget {
         return alert; // return true if the route to be popped
       },
       child: Scaffold(
-          backgroundColor: const Color(0xFF162A49),
+          backgroundColor: bg,
           appBar: AppBar(
             centerTitle: true,
             elevation: 0,
-            backgroundColor: const Color(0xFF162A49),
+            backgroundColor: bg,
             title: Text(
               title,
               style: const TextStyle(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:retrace/const/constant.dart';
 
 class UserSignupCustom extends StatelessWidget {
   const UserSignupCustom({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class UserSignupCustom extends StatelessWidget {
         TextEditingController();
 
     return CupertinoFormSection.insetGrouped(
-      backgroundColor: const Color(0xFF162A49),
+      backgroundColor: bg,
       margin: const EdgeInsets.all(12),
       children: [
         CupertinoFormRow(
@@ -78,22 +79,25 @@ class UserSignupCustom extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+            style: ElevatedButton.styleFrom(primary: Colors.white),
             label: AnimatedContainer(
               duration: const Duration(milliseconds: 500),
               height: 50,
               width: 100,
               alignment: Alignment.center,
-              child: const Text(
+              child: Text(
                 "Register",
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.white,
+                  color: bg,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            icon: const FaIcon(FontAwesomeIcons.userPlus),
+            icon: FaIcon(
+              FontAwesomeIcons.userPlus,
+              color: bg,
+            ),
             onPressed: () async {
               await Fluttertoast.showToast(
                   msg: "Work in progress",

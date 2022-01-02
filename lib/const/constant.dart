@@ -17,3 +17,5 @@ String getInitials({String? string, int? limitTo}) {
 
   return buffer.toString();
 }
+
+Color bg = const Color(0xFF162A49);

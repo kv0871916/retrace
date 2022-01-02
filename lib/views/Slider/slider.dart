@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:retrace/const/constant.dart';
 
 class SlidingCard extends StatelessWidget {
   final String email;
@@ -99,7 +100,7 @@ class CardContent extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(32),
                       ),
-                      primary: const Color(0xFF162A49),
+                      primary: bg,
                       textStyle: const TextStyle(
                         color: Colors.white,
                       )),

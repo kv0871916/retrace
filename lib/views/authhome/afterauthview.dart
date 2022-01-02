@@ -46,7 +46,7 @@ class _AfterAuthHomeState extends State<AfterAuthHome> {
         socialProvider.profiledata!.user!.providerData[0].photoURL ??
         "";
     return Material(
-        color: const Color(0xFF162A49),
+        color: bg,
         child: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

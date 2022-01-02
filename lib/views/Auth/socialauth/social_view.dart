@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:retrace/const/constant.dart';
 import 'package:retrace/controller/auth/auth_helper.dart';
 import 'package:retrace/views/Auth/userauth/login.dart';
 import 'package:retrace/views/Auth/userauth/signup.dart';
@@ -10,7 +11,6 @@ class SocialAuthView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double size = MediaQuery.of(context).size.aspectRatio;
     return DefaultTabController(
       length: 2,
       child: Column(
@@ -27,7 +27,7 @@ class SocialAuthView extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               child: TabBar(
                   unselectedLabelColor: Colors.white,
-                  labelColor: Colors.blueAccent,
+                  labelColor: bg,
                   unselectedLabelStyle: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w400,
