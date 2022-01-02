@@ -13,11 +13,11 @@ class SocialAuthView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(
+        const Text(
           'RETRACE STACK',
           style: TextStyle(
             fontSize: 25,
-            color: Colors.grey.shade800,
+            color: Colors.white,
           ),
         ),
         Row(

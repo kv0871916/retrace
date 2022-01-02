@@ -5,9 +5,32 @@ import 'package:retrace/const/constant.dart';
 import 'package:retrace/controller/auth/auth_helper.dart';
 import 'package:retrace/provider/auth/social_provider.dart';
 import 'package:retrace/views/Alert/alert.dart';
+import 'package:retrace/views/Slider/slider.dart';
 
-class AfterAuthHome extends StatelessWidget {
+class AfterAuthHome extends StatefulWidget {
   const AfterAuthHome({Key? key}) : super(key: key);
+
+  @override
+  State<AfterAuthHome> createState() => _AfterAuthHomeState();
+}
+
+class _AfterAuthHomeState extends State<AfterAuthHome> {
+  late PageController pageController;
+  double pageOffset = 0;
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(viewportFraction: 0.8);
+    pageController.addListener(() {
+      setState(() => pageOffset = pageController.page!);
+    });
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +46,7 @@ class AfterAuthHome extends StatelessWidget {
         socialProvider.profiledata!.user!.providerData[0].photoURL ??
         "";
     return Material(
-        color: Colors.black,
+        color: const Color(0xFF162A49),
         child: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -73,6 +96,41 @@ class AfterAuthHome extends StatelessWidget {
                       ),
                     ),
               tileColor: Colors.grey,
+            ),
+            const Spacer(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.55,
+              child: PageView(
+                controller: pageController,
+                children: <Widget>[
+                  SlidingCard(
+                    email: _email,
+                    displayname: _name,
+                    offset: pageOffset,
+                    image: _image,
+                    onPressed: () async {
+                      final ConfirmAction? action = await alert(context,
+                          'Are you sure you wanna logout?', 'Yup', 'Nope');
+                      if (action == ConfirmAction.accept) {
+                        await socialProvider.signOut();
+                      }
+                    },
+                  ),
+                  SlidingCard(
+                    email: _email,
+                    displayname: _name,
+                    offset: pageOffset - 1,
+                    image: _image,
+                    onPressed: () async {
+                      final ConfirmAction? action = await alert(context,
+                          'Are you sure you wanna logout?', 'Yup', 'Nope');
+                      if (action == ConfirmAction.accept) {
+                        await socialProvider.signOut();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
             const Spacer(),
             ElevatedButton.icon(

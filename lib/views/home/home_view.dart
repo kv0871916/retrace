@@ -32,9 +32,11 @@ class MyHomePage extends StatelessWidget {
         return alert; // return true if the route to be popped
       },
       child: Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: const Color(0xFF162A49),
           appBar: AppBar(
-            backgroundColor: Colors.grey.shade900,
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: const Color(0xFF162A49),
             title: Text(title),
           ),
           body: Center(

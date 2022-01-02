@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:retrace/controller/auth/auth_helper.dart';
 
 class Resource {
