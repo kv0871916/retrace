@@ -1,4 +1,4 @@
-import 'package:retrace/controller/auth/auth_helper.dart';
+import '../auth/auth_helper.dart';
 
 class Resource {
   final Status status;

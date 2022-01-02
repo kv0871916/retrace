@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../controller/auth/auth_helper.dart';
-
+import 'package:retrace/controller/auth/auth_helper.dart';
+import 'package:retrace/views/Auth/userauth/login.dart';
 import 'social_auth_class.dart';
 
 class SocialAuthView extends StatelessWidget {
@@ -20,6 +20,7 @@ class SocialAuthView extends StatelessWidget {
             color: Colors.white,
           ),
         ),
+        const UserLoginCustom(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [

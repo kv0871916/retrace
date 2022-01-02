@@ -1,14 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:retrace/const/constant.dart';
-import 'package:retrace/controller/auth/auth_helper.dart';
-import 'package:retrace/provider/auth/social_provider.dart';
-import 'package:retrace/views/Alert/alert.dart';
-
-import 'package:retrace/views/authhome/afterauthview.dart';
-
-import '../socialauth/social_view.dart';
+import 'package:retrace/views/Auth/socialauth/social_view.dart';
+import '../../provider/auth/social_provider.dart';
+import '../Alert/alert.dart';
+import '../authhome/afterauthview.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({
