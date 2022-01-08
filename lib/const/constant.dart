@@ -1,11 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/auth/social_provider.dart';
 
-var allprovider = [
+import '../provider/auth/social_provider.dart';
+import '../provider/connect/internet_provider.dart';
+
+var allprovider = [...remoteProvider, ...localprovider];
+var remoteProvider = [
   ChangeNotifierProvider<SocialProvider>(
     create: (context) => SocialProvider(),
+  ),
+];
+var localprovider = [
+  ChangeNotifierProvider<InternetStatus>(
+    create: (context) => InternetStatus(),
   ),
 ];
 String getInitials({String? string, int? limitTo}) {
@@ -19,3 +27,5 @@ String getInitials({String? string, int? limitTo}) {
 }
 
 Color bg = const Color(0xFF162A49);
+
+String appname = "Retrace Stack";

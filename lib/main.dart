@@ -25,12 +25,12 @@ class MyApp extends StatelessWidget {
       providers: allprovider,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Retrace Stack',
+        title: appname,
         themeMode: ThemeMode.dark,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Retrace Stack'),
+        home: const MyHomePage(),
       ),
     );
   }

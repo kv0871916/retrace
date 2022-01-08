@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../controller/auth/auth_helper.dart';
+import '../../../controller/auth/auth_helper.dart';
 
 alert(BuildContext context, String reason, String accept, String reject,
     {IconData? faIcon}) {

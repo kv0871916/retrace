@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:retrace/const/constant.dart';
+import '../../../const/constant.dart';
 
 class SlidingCard extends StatelessWidget {
   final String email;
