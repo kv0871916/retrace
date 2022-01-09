@@ -2,15 +2,15 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:github_sign_in/github_sign_in.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../../controller/resources/resoures.dart';
 import 'package:twitter_login/twitter_login.dart';
+
 import '../../controller/auth/auth_helper.dart';
+import '../../controller/resources/resoures.dart';
 
 class SocialProvider extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;

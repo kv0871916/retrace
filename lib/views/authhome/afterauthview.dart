@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../helper/Alert/alert.dart';
-import '../helper/Slider/slider.dart';
+
 import '../../const/constant.dart';
 import '../../controller/auth/auth_helper.dart';
 import '../../provider/auth/social_provider.dart';
+import '../helper/Alert/alert.dart';
+import '../helper/Slider/slider.dart';
 
 class AfterAuthHome extends StatefulWidget {
   const AfterAuthHome({Key? key}) : super(key: key);

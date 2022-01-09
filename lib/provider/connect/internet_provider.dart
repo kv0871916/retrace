@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:retrace/const/Internet/colors_internet.dart';
+
+import '../../const/Internet/colors_internet.dart';
 import '../../controller/auth/auth_helper.dart';
 
 class InternetStatus extends ChangeNotifier {

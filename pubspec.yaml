@@ -49,6 +49,7 @@ dependencies:
   cloud_firestore: ^3.1.5
   connectivity: ^3.0.6
   lottie: ^1.2.1
+  neon: ^0.1.0
 
 dev_dependencies:
   flutter_test:

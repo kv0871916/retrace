@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:retrace/controller/auth/auth_helper.dart';
+
+import '../../controller/auth/auth_helper.dart';
 
 List<Color> customcolor = [
   Colors.yellow,
   Colors.green,
-  Colors.greenAccent,
+  Colors.green,
   Colors.red
 ];
 List<String> customString = ["Loading", "Online", "Offline"];

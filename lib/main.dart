@@ -5,6 +5,7 @@ import 'package:url_strategy/url_strategy.dart';
 
 import 'const/constant.dart';
 import 'firebase_options.dart';
+import 'provider/theme/theme_provider.dart';
 import 'views/home/home_view.dart';
 
 Future main() async {
@@ -23,14 +24,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: allprovider,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: appname,
-        themeMode: ThemeMode.dark,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MyHomePage(),
+      child: Consumer<ThemeProvider>(
+        builder: (ctx, themeProvider, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: appname,
+            themeMode: themeProvider.thememode,
+            theme: ThemeProvider.light,
+            darkTheme: ThemeProvider.dark,
+            home: const MyHomePage(),
+          );
+        },
       ),
     );
   }

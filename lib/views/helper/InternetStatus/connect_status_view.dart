@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
-
-import 'package:retrace/views/helper/Loading/loading.dart';
-
+// ignore_for_file: implementation_imports
+import '../Loading/loading.dart';
 import '../../../controller/auth/auth_helper.dart';
 import '../../../provider/connect/internet_provider.dart';
 

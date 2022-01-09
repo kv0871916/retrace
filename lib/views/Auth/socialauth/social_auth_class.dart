@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:retrace/const/constant.dart';
 import '../../../controller/auth/auth_helper.dart';
 import '../../../provider/auth/social_provider.dart';
 
@@ -44,19 +43,25 @@ class SocialAuthBotton extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           boxShadow: [
+            // BoxShadow(
+            //   color: faColor,
+            //   spreadRadius: 4,
+            //   blurRadius: 10,
+            // ),
+            // BoxShadow(
+            //   color: faColor,
+            //   spreadRadius: -4,
+            //   blurRadius: 5,
+            // ),
             BoxShadow(
-              color: faColor,
-              spreadRadius: 4,
-              blurRadius: 10,
-            ),
-            BoxShadow(
-              color: faColor,
-              spreadRadius: -4,
-              blurRadius: 5,
+              offset: const Offset(2, 2),
+              color: faColor.withOpacity(0.40),
+              blurRadius: 7.0,
             )
           ],
+          borderRadius: BorderRadius.circular(10),
           color: faColor,
-          shape: BoxShape.circle,
+          shape: BoxShape.rectangle,
         ),
         child: IconButton(
           onPressed: ontap,
