@@ -41,14 +41,6 @@ class UserSignupCustom extends StatelessWidget {
             decoration: BoxDecoration(
               color: themeManger(c: context, d: bg, l: white),
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                boxshadow(
-                    context: context,
-                    color: themeManger(
-                        c: context,
-                        d: Colors.white.withOpacity(0.40),
-                        l: Colors.lightBlueAccent.withOpacity(0.40))),
-              ],
             ),
             child: Column(
               children: [
@@ -109,14 +101,6 @@ class UserSignupCustom extends StatelessWidget {
             decoration: BoxDecoration(
               color: themeManger(c: context, d: bg, l: white),
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                boxshadow(
-                    context: context,
-                    color: themeManger(
-                        c: context,
-                        d: Colors.white.withOpacity(0.40),
-                        l: Colors.lightBlueAccent.withOpacity(0.40))),
-              ],
             ),
             child: Column(
               children: [
@@ -203,34 +187,28 @@ class UserSignupCustom extends StatelessWidget {
             decoration: BoxDecoration(
               color: themeManger(c: context, d: bg, l: white),
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                boxshadow(
-                    context: context,
-                    color: themeManger(
-                        c: context,
-                        d: Colors.white.withOpacity(0.40),
-                        l: Colors.lightBlueAccent.withOpacity(0.40))),
-              ],
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: themeManger(c: context, d: bg, l: white),
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                     boxShadow: [
                       boxshadow(
-                          context: context,
-                          color: themeManger(
-                              c: context,
-                              d: Colors.white.withOpacity(0.40),
-                              l: Colors.lightBlueAccent.withOpacity(0.40))),
+                        context: context,
+                        color: themeManger(c: context, d: white, l: bg),
+                      ),
                     ],
+                    border: Border.all(
+                        width: 0.5,
+                        color: themeManger(c: context, d: white, l: bg),
+                        style: BorderStyle.solid),
                   ),
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        primary: themeManger(c: context, d: bg, l: white),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     label: AnimatedContainer(
@@ -242,14 +220,14 @@ class UserSignupCustom extends StatelessWidget {
                         "Register",
                         style: TextStyle(
                           fontSize: 20,
-                          color: bg,
+                          color: themeManger(c: context, d: white, l: bg),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     icon: FaIcon(
                       FontAwesomeIcons.userPlus,
-                      color: bg,
+                      color: themeManger(c: context, d: white, l: bg),
                     ),
                     onPressed: () async {
                       await Fluttertoast.showToast(
@@ -267,14 +245,6 @@ class UserSignupCustom extends StatelessWidget {
               decoration: BoxDecoration(
                 color: themeManger(c: context, d: bg, l: white),
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  boxshadow(
-                      context: context,
-                      color: themeManger(
-                          c: context,
-                          d: Colors.white.withOpacity(0.40),
-                          l: Colors.lightBlueAccent.withOpacity(0.40))),
-                ],
               ),
               padding: const EdgeInsets.all(20.0),
               child: const SocialLoginBotton()),

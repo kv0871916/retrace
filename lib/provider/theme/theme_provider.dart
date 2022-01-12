@@ -30,3 +30,11 @@ Color themeManger(
   bool theme = c.watch<ThemeProvider>().isDark;
   return theme ? d : l;
 }
+
+MaterialColor themeMaterialManger(
+    {required BuildContext c,
+    required MaterialColor l,
+    required MaterialColor d}) {
+  bool theme = c.watch<ThemeProvider>().isDark;
+  return theme ? d : l;
+}

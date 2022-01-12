@@ -22,23 +22,17 @@ class UserLoginCustom extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: CupertinoFormSection.insetGrouped(
-        decoration:
-            BoxDecoration(color: themeManger(c: context, d: bg, l: white)),
+        decoration: BoxDecoration(
+          color: themeManger(c: context, d: bg, l: white),
+        ),
         backgroundColor: themeManger(c: context, d: bg, l: white),
         margin: const EdgeInsets.all(12),
         children: [
           DecoratedBox(
             decoration: BoxDecoration(
-                color: themeManger(c: context, d: bg, l: white),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                boxShadow: [
-                  boxshadow(
-                      context: context,
-                      color: themeManger(
-                          c: context,
-                          d: Colors.white.withOpacity(0.40),
-                          l: Colors.lightBlueAccent.withOpacity(0.40))),
-                ]),
+              color: themeManger(c: context, d: bg, l: white),
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            ),
             child: Column(
               children: [
                 CupertinoFormRow(
@@ -91,14 +85,6 @@ class UserLoginCustom extends StatelessWidget {
             decoration: BoxDecoration(
               color: themeManger(c: context, d: bg, l: white),
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              boxShadow: [
-                boxshadow(
-                    context: context,
-                    color: themeManger(
-                        c: context,
-                        d: Colors.white.withOpacity(0.40),
-                        l: Colors.lightBlueAccent.withOpacity(0.40))),
-              ],
             ),
             padding: const EdgeInsets.all(20.0),
             child: Row(
@@ -116,6 +102,10 @@ class UserLoginCustom extends StatelessWidget {
                               d: Colors.white.withOpacity(0.40),
                               l: Colors.lightBlueAccent.withOpacity(0.40))),
                     ],
+                    border: Border.all(
+                        width: 0.5,
+                        color: themeManger(c: context, d: white, l: bg),
+                        style: BorderStyle.solid),
                   ),
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -154,17 +144,9 @@ class UserLoginCustom extends StatelessWidget {
           ),
           Container(
               decoration: BoxDecoration(
-                  color: themeManger(c: context, d: bg, l: white),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  boxShadow: [
-                    boxshadow(
-                        context: context,
-                        y: 0,
-                        color: themeManger(
-                            c: context,
-                            d: Colors.white.withOpacity(0.10),
-                            l: Colors.lightBlueAccent.withOpacity(0.10))),
-                  ]),
+                color: themeManger(c: context, d: bg, l: white),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              ),
               padding: const EdgeInsets.all(20.0),
               child: const SocialLoginBotton()),
           Padding(

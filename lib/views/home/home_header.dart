@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:neon/neon.dart';
 import 'package:provider/provider.dart';
 import '../../const/constant.dart';
 import '../../provider/connect/internet_provider.dart';
@@ -33,32 +34,33 @@ PreferredSizeWidget appBar(BuildContext context) {
                   });
             },
           ),
-          Text(
-            appname,
-            style: TextStyle(
-                fontSize: 25,
-                color: themeManger(c: context, d: white, l: bg),
-                textBaseline: TextBaseline.ideographic),
+          Flexible(
+            child: Neon(
+              text: appname,
+              color: themeMaterialManger(
+                  c: context, d: Colors.blue, l: Colors.purple),
+              fontSize: 20,
+              font: NeonFont.Beon,
+              flickeringText: true,
+              glowing: true,
+            ),
           ),
+          // Text(
+          //   appname,
+          //   style: TextStyle(
+          //       fontSize: 25,
+          //       color: themeManger(c: context, d: white, l: bg),
+          //       textBaseline: TextBaseline.ideographic),
+          // ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             decoration: BoxDecoration(
                 color: themeManger(c: context, d: bg, l: white),
-                boxShadow: [
-                  BoxShadow(
-                    color: color,
-                    spreadRadius: 1,
-                    blurRadius: 10,
-                  ),
-                  BoxShadow(
-                    color: color,
-                    spreadRadius: -4,
-                    blurRadius: 5,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                    width: 1.0, color: color, style: BorderStyle.solid)),
+                    width: 0.5,
+                    color: themeManger(c: context, d: white, l: bg),
+                    style: BorderStyle.solid)),
             child: Row(
               children: [
                 Padding(

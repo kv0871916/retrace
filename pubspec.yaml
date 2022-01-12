@@ -1,5 +1,5 @@
 name: retrace
-description: A new Flutter project.
+description: I can't just summaries many years in few lines but i have worked on many companies related to social media marketing , python bot automation and graphic designer. Currently looking into building cross platform development . So that 's all about my working and now about me i love too check social media have fun via connecting people thoughts
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -50,6 +50,8 @@ dependencies:
   connectivity: ^3.0.6
   lottie: ^1.2.1
   neon: ^0.1.0
+  velocity_x: ^3.3.0
+  google_fonts: ^2.2.0
 
 dev_dependencies:
   flutter_test:

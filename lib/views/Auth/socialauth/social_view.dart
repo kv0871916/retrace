@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:retrace/views/helper/Decoration/decoration.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../../const/constant.dart';
 import '../../../provider/theme/theme_provider.dart';
@@ -26,17 +27,17 @@ class SocialAuthView extends StatelessWidget {
             decoration: BoxDecoration(
               color: themeManger(c: context, d: bg, l: white),
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                boxshadow(
-                    context: context,
-                    y: 0,
-                    color: themeManger(
-                        c: context,
-                        d: Colors.white.withOpacity(0.10),
-                        l: Colors.lightBlueAccent.withOpacity(0.10))),
-              ],
+              // boxShadow: [
+              //   boxshadow(
+              //       context: context,
+              //       y: 0,
+              //       color: themeManger(
+              //           c: context,
+              //           d: Colors.white.withOpacity(0.10),
+              //           l: Colors.lightBlueAccent.withOpacity(0.10))),
+              // ],
               border: Border.all(
-                  width: 0,
+                  width: 0.5,
                   color: themeManger(c: context, d: bg, l: white),
                   style: BorderStyle.solid),
               //  color: Colors.white,
@@ -56,15 +57,6 @@ class SocialAuthView extends StatelessWidget {
                   letterSpacing: 1,
                 ),
                 indicator: BoxDecoration(
-                    boxShadow: [
-                      boxshadow(
-                          context: context,
-                          y: 0,
-                          color: themeManger(
-                              c: context,
-                              d: Colors.white.withOpacity(0.10),
-                              l: Colors.lightBlueAccent.withOpacity(0.10))),
-                    ],
                     color: themeManger(c: context, d: bg, l: white),
                     border: Border.all(
                         width: 0.5,
@@ -78,20 +70,26 @@ class SocialAuthView extends StatelessWidget {
                   Tab(
                     text: 'Register',
                   ),
-                ]),
+                ]).glassMorphic(),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            Expanded(
-              child: TabBarView(children: <Widget>[
-                UserLoginCustom(),
-                UserSignupCustom(),
-              ]),
-            ),
-          ],
+        body: DecoratedBox(
+          decoration: BoxDecoration(
+            color: themeManger(c: context, d: bg, l: white),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              Expanded(
+                child: TabBarView(children: <Widget>[
+                  UserLoginCustom(),
+                  UserSignupCustom(),
+                ]),
+              ),
+            ],
+          ),
         ),
       ),
     );
