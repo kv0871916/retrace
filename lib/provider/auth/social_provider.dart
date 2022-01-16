@@ -7,10 +7,12 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:github_sign_in/github_sign_in.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:retrace/views/helper/Toast/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitter_login/twitter_login.dart';
-
 import '../../controller/auth/auth_helper.dart';
 import '../../controller/resources/resoures.dart';
+import 'firestore_auth.dart';
 
 class SocialProvider extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -59,6 +61,105 @@ class SocialProvider extends ChangeNotifier {
     }
   }
 
+  Future<UserCustomAuth> loginWithEmail(String email, String password) async {
+    try {
+      _loading = true;
+      SharedPreferences emailprefs = await SharedPreferences.getInstance();
+      SharedPreferences userModel = await SharedPreferences.getInstance();
+
+      UserCredential _results = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      _user = _results.user;
+      _profiledata = _results;
+
+      userModel.setString("id", _results.user!.uid);
+      emailprefs.setString('email', email);
+
+      log("id ${userModel.getString('id')}");
+
+      _loading = false;
+      notifyListeners();
+      return UserCustomAuth.isSuccess;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        log('No user found for that email.');
+        toast(
+            msg: 'No user found for $email email id',
+            backgroundColor: Colors.red);
+        notifyListeners();
+        return UserCustomAuth.isNoUserFound;
+      } else if (e.code == 'wrong-password') {
+        log('Wrong password provided for that user.');
+        toast(
+            msg: 'Wrong password provided for $email user.',
+            backgroundColor: Colors.red);
+        notifyListeners();
+        return UserCustomAuth.isWorngPass;
+      }
+      notifyListeners();
+      return UserCustomAuth.isNone;
+    } catch (e) {
+      log("there is an exception");
+      notifyListeners();
+      return UserCustomAuth.isNone;
+    }
+  }
+
+  Future<UserCustomAuth> signupWithEmail({
+    required String email,
+    required String password,
+    required String firstname,
+    required String lastname,
+  }) async {
+    try {
+      UserCredential _results = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      _user = _results.user;
+      _profiledata = _results;
+      var userid = _profiledata!.user!.uid;
+      var fireusers = DatabaseService(
+              email: email,
+              userid: userid,
+              password: password,
+              fistname: firstname,
+              lastname: lastname)
+          .updateUserData(email, userid, password);
+      SharedPreferences emailprefs = await SharedPreferences.getInstance();
+      SharedPreferences userModel = await SharedPreferences.getInstance();
+      userModel.setString("id", _results.user!.uid);
+      log("id ${userModel.getString('id')}");
+
+      emailprefs.setString('email', email);
+      log("************************************************");
+      log(fireusers.toString());
+      return UserCustomAuth.isSuccess;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "weak-password") {
+        toast(
+            msg: 'Weak password provided for $email user.',
+            backgroundColor: Colors.red);
+        log('Password is weak');
+
+        return UserCustomAuth.isWeakPass;
+      } else if (e.code == 'email-already-in-use') {
+        log('Account already in use');
+        toast(
+            msg: 'Account already in use for $email user.',
+            backgroundColor: Colors.red);
+
+        return UserCustomAuth.isExists;
+      }
+      log(e.toString());
+
+      return UserCustomAuth.isNone;
+    } catch (e) {
+      log("there is an exception");
+
+      return UserCustomAuth.isNone;
+    }
+  }
+
   Future googlesignin() async {
     //init user
     try {
@@ -86,17 +187,20 @@ class SocialProvider extends ChangeNotifier {
             fontSize: 16.0);
         _loading = false;
         notifyListeners();
+        return Status.success;
       });
 
       _loading = false;
       notifyListeners();
+      return Status.success;
     } catch (e) {
       log("Error:" + e.toString());
       notifyListeners();
+      return Status.none;
     }
   }
 
-  Future<Resource?> signInWithFacebook() async {
+  Future<Status> signInWithFacebook() async {
     try {
       if (kIsWeb) {
         _loading = true;
@@ -117,11 +221,11 @@ class SocialProvider extends ChangeNotifier {
               fontSize: 16.0);
           _loading = false;
           notifyListeners();
-          return Resource(status: Status.success);
+          return Status.success;
         });
         _loading = false;
         notifyListeners();
-        return Resource(status: Status.error);
+        return Status.success;
       } else {
         _loading = true;
         final LoginResult result = await FacebookAuth.instance.login();
@@ -140,33 +244,35 @@ class SocialProvider extends ChangeNotifier {
                   fontSize: 16.0);
               _loading = false;
               notifyListeners();
+              return Status.success;
             });
             _loading = false;
             notifyListeners();
 
-            return Resource(status: Status.success);
+            return Status.success;
           case LoginStatus.cancelled:
             _loading = false;
             notifyListeners();
-            return Resource(status: Status.cancelled);
+            return Status.cancelled;
           case LoginStatus.failed:
             _loading = false;
             notifyListeners();
-            return Resource(status: Status.error);
+            return Status.error;
           default:
             _loading = false;
             notifyListeners();
-            return null;
+            return Status.none;
         }
       }
-    } on FirebaseAuthException {
+    } on FirebaseAuthException catch (e) {
       _loading = false;
+      log(e.toString());
       notifyListeners();
-      rethrow;
+      return Status.error;
     }
   }
 
-  Future<Resource?> signInWithTwitter() async {
+  Future<Status> signInWithTwitter() async {
     try {
       if (kIsWeb) {
         _loading = true;
@@ -186,12 +292,13 @@ class SocialProvider extends ChangeNotifier {
               fontSize: 16.0);
           _loading = false;
           notifyListeners();
+          return Status.success;
         });
         // Or use signInWithRedirect
         // return await FirebaseAuth.instance.signInWithRedirect(twitterProvider);
         _loading = false;
         notifyListeners();
-        return Resource(status: Status.success);
+        return Status.error;
       } else {
         // Trigger the sign-in flow
         _loading = true;
@@ -218,42 +325,42 @@ class SocialProvider extends ChangeNotifier {
                   fontSize: 16.0);
               _loading = false;
               notifyListeners();
+              return Status.success;
             });
             _loading = false;
             notifyListeners();
 
-            return Resource(status: Status.success);
+            return Status.success;
           case TwitterLoginStatus.cancelledByUser:
             _loading = false;
             notifyListeners();
-            return Resource(status: Status.cancelled);
+            return Status.cancelled;
           case TwitterLoginStatus.error:
             _loading = false;
             notifyListeners();
-            return Resource(status: Status.error);
+            return Status.error;
           default:
             _loading = false;
             notifyListeners();
-            return null;
+            return Status.none;
         }
       }
-    } on FirebaseAuthException {
+    } on FirebaseAuthException catch (e) {
       _loading = false;
+      log(e.toString());
       notifyListeners();
-      rethrow;
+      return Status.error;
     }
   }
 
-  Future<Resource?> signInWithGithub(BuildContext context) async {
+  Future<Status> signInWithGithub(BuildContext context) async {
     try {
       if (kIsWeb) {
         _loading = true;
         // Create a new provider
         GithubAuthProvider githubProvider = GithubAuthProvider();
         // Once signed in, return the UserCredential
-        await FirebaseAuth.instance
-            .signInWithPopup(githubProvider)
-            .then((value) {
+        await auth.signInWithPopup(githubProvider).then((value) {
           _user = value.user;
           _profiledata = value;
           Fluttertoast.showToast(
@@ -262,13 +369,15 @@ class SocialProvider extends ChangeNotifier {
               textColor: Colors.white,
               fontSize: 16.0);
           _loading = false;
+
           notifyListeners();
+          return Status.success;
         });
         // Or use signInWithRedirect
         // return await FirebaseAuth.instance.signInWithRedirect(twitterProvider);
         _loading = false;
         notifyListeners();
-        return Resource(status: Status.success);
+        return Status.error;
       } else {
         _loading = true;
         // Trigger the sign-in flow
@@ -293,34 +402,35 @@ class SocialProvider extends ChangeNotifier {
                   fontSize: 16.0);
               _loading = false;
               notifyListeners();
+              return Status.success;
             });
             _loading = false;
             notifyListeners();
-            return Resource(status: Status.success);
+            return Status.success;
           case GitHubSignInResultStatus.cancelled:
             _loading = false;
             notifyListeners();
-            return Resource(status: Status.cancelled);
+            return Status.cancelled;
           case GitHubSignInResultStatus.failed:
             _loading = false;
             notifyListeners();
-            return Resource(status: Status.error);
+            return Status.error;
           default:
             _loading = false;
             notifyListeners();
-            return null;
+            return Status.none;
         }
       }
-    } on FirebaseAuthException {
+    } on FirebaseAuthException catch (e) {
       _loading = false;
+      log(e.toString());
       notifyListeners();
-      rethrow;
+      return Status.error;
     }
   }
 
   Future<void> signOut() async {
     _loading = true;
-    await Future.delayed(const Duration(seconds: 1));
     await gsignin.signOut();
     await auth.signOut();
     _guser = null;

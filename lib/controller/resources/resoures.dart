@@ -14,3 +14,23 @@ class Resource {
     }
   }
 }
+
+getfistname(String name) {
+  List namelist = name.split(" ");
+  int length = namelist.length;
+  if (length >= 0 && name != null) {
+    return namelist.first;
+  } else {
+    return " ";
+  }
+}
+
+getlastname(String name) {
+  List namelist = name.split(" ");
+  int length = namelist.length;
+  if (length >= 0 && name != null) {
+    return namelist.last;
+  } else {
+    return " ";
+  }
+}

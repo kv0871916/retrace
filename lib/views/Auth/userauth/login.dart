@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+import 'package:retrace/controller/auth/auth_helper.dart';
+import 'package:retrace/provider/auth/social_provider.dart';
 import 'package:retrace/views/helper/Decoration/decoration.dart';
 import '../socialauth/socail_botton_view.dart';
-
 import '../../../provider/theme/theme_provider.dart';
-
 import '../../../const/constant.dart';
 
 class UserLoginCustom extends StatelessWidget {
@@ -131,11 +132,10 @@ class UserLoginCustom extends StatelessWidget {
                       color: themeManger(c: context, d: white, l: bg),
                     ),
                     onPressed: () async {
-                      await Fluttertoast.showToast(
-                          msg: "Work in progress",
-                          backgroundColor: Colors.green,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
+                      final socialProvider =
+                          Provider.of<SocialProvider>(context, listen: false);
+                      await socialProvider.loginWithEmail(
+                          _emailController.text, _passwordController.text);
                     },
                   ),
                 ),

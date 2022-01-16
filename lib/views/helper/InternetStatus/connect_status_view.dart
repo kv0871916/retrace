@@ -19,8 +19,7 @@ class ConnectStatusView extends StatefulWidget {
 class _ConnectStatusViewState extends State<ConnectStatusView> {
   @override
   void initState() {
-    context.read<InternetStatus>().connect();
-
+    context.read<InternetStatus>().startinternetcheck();
     super.initState();
   }
 

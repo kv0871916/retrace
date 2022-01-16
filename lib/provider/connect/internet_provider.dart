@@ -10,10 +10,12 @@ class InternetStatus extends ChangeNotifier {
   Connect getCurrentStatus = Connect.initial;
   Color? getCurrentColors = connectmap[Connect.initial];
   String? getCurrentStatusTitle = connectext[Connect.initial];
+  final Connectivity _connectivity = Connectivity();
+
   connect() async {
     log(getCurrentColors.toString());
     ConnectivityResult connectivityResult =
-        await (Connectivity().checkConnectivity());
+        await _connectivity.checkConnectivity();
 
     switch (connectivityResult) {
       case ConnectivityResult.mobile:
@@ -41,6 +43,40 @@ class InternetStatus extends ChangeNotifier {
         notifyListeners();
         break;
     }
+    notifyListeners();
+  }
+
+  startinternetcheck() async {
+    await connect();
+    _connectivity.onConnectivityChanged
+        .listen((ConnectivityResult connectivityResult) {
+      switch (connectivityResult) {
+        case ConnectivityResult.mobile:
+          getCurrentStatus = Connect.mobile;
+          getCurrentColors = connectmap[Connect.mobile];
+          getCurrentStatusTitle = connectext[Connect.mobile];
+          notifyListeners();
+          break;
+        case ConnectivityResult.wifi:
+          getCurrentStatus = Connect.wifi;
+          getCurrentColors = connectmap[Connect.wifi];
+          getCurrentStatusTitle = connectext[Connect.wifi];
+          notifyListeners();
+          break;
+        case ConnectivityResult.none:
+          getCurrentStatus = Connect.nodata;
+          getCurrentColors = connectmap[Connect.nodata];
+          getCurrentStatusTitle = connectext[Connect.nodata];
+          notifyListeners();
+          break;
+        default:
+          getCurrentStatus = Connect.initial;
+          getCurrentColors = connectmap[Connect.initial];
+          getCurrentStatusTitle = connectext[Connect.initial];
+          notifyListeners();
+          break;
+      }
+    });
     notifyListeners();
   }
 
